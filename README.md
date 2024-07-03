@@ -99,17 +99,15 @@ Generating pre-built zip archives for distribution:
 gulp build dist --prod
 ```
 
-## Docker
-
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
+## EXPRESS
+this is how I create express BE
 
 ```sh
-cd dillinger
-docker build -t <youruser>/dillinger:${package.json.version} .
+npx express-generator --no-view xpress-mongo
+cd express-mongo
+npm install
+
+npm install mongoose redis express-graphql graphql
 ```
 
 This will create the dillinger image and pull in the necessary dependencies.

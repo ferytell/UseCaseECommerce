@@ -33,6 +33,6 @@ build/
 .vscode/
 
 
-### VS Code ###
+### ENV ###
 .env
 

@@ -1,0 +1,53 @@
+get http://localhost:5000/hello
+
+
+### =============== GET Customer ===============
+
+get http://localhost:5000/api/customers
+
+
+
+### =============== POST Customer ===============
+
+post http://localhost:5000/api/customers
+Content-Type: application/json
+
+{
+    "qrCode": "123456",
+    "nama": "John Doe",
+    "wallet": 1000.0
+}
+
+### =============== GET Barang ===============
+
+get http://localhost:5000/api/barang
+
+
+### =============== POST Barang ===============
+
+post http://localhost:5000/api/barang
+Content-Type: application/json
+
+{
+    "hargaSatuan": 500.00,
+    "namaBarang": "Susu UHT",
+    "rfid": "CA00026"
+}
+
+
+### =============== GET Transaksi ===============
+
+get http://localhost:5000/api/transaksi
+
+
+### =============== POST Barang ===============
+
+post http://localhost:5000/api/barang
+Content-Type: application/json
+
+{
+    "hargaSatuan": 500.00,
+    "namaBarang": "Susu UHT",
+    "rfid": "CA00026"
+}
+

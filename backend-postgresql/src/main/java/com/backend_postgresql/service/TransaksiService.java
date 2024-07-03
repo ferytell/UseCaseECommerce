@@ -16,4 +16,9 @@ public class TransaksiService {
     public List<Transaksi> getAllTransaksis() {
         return transaksiRepository.findAll();
     }
+
+    public Transaksi addTransaksi(Transaksi transaksi) {
+        return transaksiRepository.save(transaksi);
+    }
+
 }

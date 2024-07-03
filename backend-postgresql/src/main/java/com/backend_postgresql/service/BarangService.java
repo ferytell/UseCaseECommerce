@@ -16,4 +16,9 @@ public class BarangService {
     public List<Barang> getAllBarangs() {
         return barangRepository.findAll();
     }
+
+    public Barang addBarang(Barang barang) {
+        return barangRepository.save(barang);
+    }
+
 }
