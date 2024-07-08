@@ -13,8 +13,8 @@ post http://localhost:5000/api/customers
 Content-Type: application/json
 
 {
-    "qrCode": "123456",
-    "nama": "John Doe",
+    "qrCode": "123457",
+    "nama": "Imas Rokayah",
     "wallet": 1000.0
 }
 
@@ -40,14 +40,26 @@ Content-Type: application/json
 get http://localhost:5000/api/transaksi
 
 
-### =============== POST Barang ===============
+### =============== POST Transaksi ===============
 
-post http://localhost:5000/api/barang
+post http://localhost:5000/api/transaksi
 Content-Type: application/json
 
 {
-    "hargaSatuan": 500.00,
-    "namaBarang": "Susu UHT",
-    "rfid": "CA00026"
+    "qrCode": "123457",
+    "rfid": "CA00026",
+    "jumlah": 1
 }
+
+
+### =============== GET Test History ===============
+
+get http://localhost:4000/history/hello
+
+
+
+### =============== POST Transaksi ===============
+
+get http://localhost:4000/history/hello
+
 

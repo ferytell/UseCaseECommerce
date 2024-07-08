@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var historyRouter = require('./routes/history');
 var transactionRoutes = require('./routes/transactions');
 const connectDB = require('./connection/mongoDb');
 const redisClient = require('./connection/redisClient');
@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/history', historyRouter);
 app.use('/api/transactions', transactionRoutes);
 
 module.exports = app;

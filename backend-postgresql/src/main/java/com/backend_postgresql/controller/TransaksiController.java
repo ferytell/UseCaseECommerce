@@ -1,5 +1,6 @@
 package com.backend_postgresql.controller;
 
+import com.backend_postgresql.dto.TransaksiRequest;
 import com.backend_postgresql.model.Transaksi;
 import com.backend_postgresql.service.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class TransaksiController {
 
-    @Autowired
+    @Autowired 
     private TransaksiService transaksiService;
 
     @GetMapping("/transaksi")
@@ -23,8 +25,17 @@ public class TransaksiController {
         return transaksiService.getAllTransaksis();
     }
 
+    // @PostMapping("/transaksi")
+    // public Transaksi createTransaction(@RequestParam String qrCode, @RequestParam String rfid, @RequestParam int jumlah) {
+    //     return transaksiService.createTransaction(qrCode, rfid, jumlah);
+    // }
+
     @PostMapping("/transaksi")
-    public Transaksi addTransaksi(@RequestBody Transaksi transaksi) {
-        return transaksiService.addTransaksi(transaksi);
+    public Transaksi createTransaction(@RequestBody TransaksiRequest transaksiRequest) {
+        return transaksiService.createTransaction(
+            transaksiRequest.getQrCode(),
+            transaksiRequest.getRfid(),
+            transaksiRequest.getJumlah()
+        );
     }
 }
