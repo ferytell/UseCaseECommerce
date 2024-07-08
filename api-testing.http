@@ -31,8 +31,26 @@ Content-Type: application/json
 {
     "hargaSatuan": 500.00,
     "namaBarang": "Susu UHT",
-    "rfid": "CA00026"
+    "rfid": "CA00027"
 }
+
+
+### =============== EDIT Barang ===============
+
+put http://localhost:5000/api/barang/CA00028
+Content-Type: application/json
+
+{
+    "hargaSatuan": 500.00,
+    "namaBarang": "Susk",
+    "rfid": "CA00028"
+}
+
+
+### =============== DELETE Barang ===============
+
+delete http://localhost:5000/api/barang/CA00027
+Content-Type: application/json
 
 
 ### =============== GET Transaksi ===============

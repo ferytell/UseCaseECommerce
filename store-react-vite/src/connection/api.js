@@ -11,7 +11,7 @@ export const getJavaTest = async () => {
   }
 };
 
-// Java Spring Boot API
+// Java API get Barang
 export const getDataBarang = async () => {
   try {
     const response = await axios.get('/api/barang');
@@ -21,6 +21,60 @@ export const getDataBarang = async () => {
     throw error;
   }
 };
+
+
+// Java API add Barang
+export const addBarang = async (barang) => {
+  try {
+    const response = await axios.post('/api/barang', barang , {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching barang data:', error);
+    throw error;
+  }
+};
+
+// Java API add Barang
+export const editBarang = async (barang) => {
+  console.log('barang', barang)
+  try {
+    const response = await axios.put(`/api/barang/${barang.rfid}`, barang , {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching barang data:', error);
+    throw error;
+  }
+};
+
+// Java API delete Barang
+export const deleteBarang = async (id) => {
+  try {
+    const response = await axios.delete(`/api/barang/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching barang data:', error);
+    throw error;
+  }
+};
+
+
+// ====================//
+
+// Java API get Customer
+export const getDataCustomer = async () => {
+  try {
+    const response = await axios.get('/api/customers');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching customer data:', error);
+    throw error;
+  }
+};
+
 
 // Express.js API
 export const getExpressData = async () => {

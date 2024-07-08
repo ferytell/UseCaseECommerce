@@ -1,6 +1,15 @@
 import  { useState } from 'react';
+import { useNavigate  } from 'react-router-dom';
 
 const RegisterCustomer = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/main-menu');
+ };
+
+
+
   const [customers, setCustomers] = useState([
     { id: 1, name: 'John Doe', wallet: 98700 },
     { id: 2, name: 'Jane Smith', wallet: 95504 },
@@ -63,7 +72,7 @@ const RegisterCustomer = () => {
           <li key={customer.id}>{customer.name} (ID: {customer.id}) {customer.wallet}</li>
         ))}
       </ul>
-
+      <button className="button" onClick={handleBack}>Main Menu</button>
     </div>
   );
 };

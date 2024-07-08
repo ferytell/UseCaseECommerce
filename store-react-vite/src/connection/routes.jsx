@@ -10,11 +10,13 @@ import MainMenu from "../components/main/main";
 // import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import RegisterCustomer from "../components/RegisterCustomer";
+import AdminPanel from "../components/main/admin";
 
 const RoutesConfig = () => (
   <Router>
     {/* <Navigation /> */}
     <Routes>
+      <Route path="/admin-panel" element={<AdminPanel />} />
       <Route path="/main-menu" element={<MainMenu />} />
       <Route path="/qr-reader" element={<QRReader />} />
       <Route path="register-customer" element={<RegisterCustomer />} />

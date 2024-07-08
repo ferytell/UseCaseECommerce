@@ -1,5 +1,5 @@
-import { Link, useNavigate  } from 'react-router-dom';
-import Footer from "../Footer";
+import {  useNavigate  } from 'react-router-dom';
+
 
 
 const MainMenu = () => {
@@ -9,9 +9,17 @@ const MainMenu = () => {
         navigate(-1); // This will navigate back to the previous page
       };
 
-      const handleGO = () => {
+      const handleRegister = () => {
          navigate('/register-customer');
       };
+
+      const handleTransaction = () => {
+        navigate('/simpan-transaksi');
+     };
+
+     const handleAdmin = () => {
+      navigate('/admin-panel');
+   };
     
     
 
@@ -22,9 +30,9 @@ const MainMenu = () => {
 
         <button className="button" onClick={handleBack}>Back</button>
         <div className="columnFlex">
-          <button  className="button" onClick={handleGO}>Register Customer </button>
-          <button className="button">Transaction Customer</button>
-          <button className="button">Admin</button>
+          <button  className="button" onClick={handleRegister}>Register Customer </button>
+          <button className="button" onClick={handleTransaction}>Transaction Customer</button>
+          <button className="button" onClick={handleAdmin}>Admin</button>
         </div>
       </div>
       {/* <Footer /> */}
