@@ -8,4 +8,25 @@ const transactionSchema = new mongoose.Schema({
     tanggalJam: Date
 });
 
+// const transactionsSchema = new mongoose.Schema({
+//     qrCode: {
+//       type: String,
+//       required: true
+//     },
+//     rfid: {
+//       type: String,
+//       required: true
+//     },
+//     jumlah: {
+//       type: Number,
+//       required: true
+//     },
+//     date: {
+//       type: Date,
+//       default: Date.now
+//     }
+//   });
+  
+  
+
 module.exports = mongoose.model('Transaction', transactionSchema);

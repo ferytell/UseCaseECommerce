@@ -1,21 +1,20 @@
 import { useState } from "react";
 import QrScanner from "react-qr-scanner";
-import QRCodeGenerator from "./QRCodeGenerator";
+import PropTypes from 'prop-types';
 
-const QRReader = () => {
+const QRReader = ({setUserData}) => {
   const [qrData, setQrData] = useState("No result");
   const [openQr, setOpenQR] = useState(false);
-  const [inputData, setInputData] = useState("");
-  const [dataInput, setDataInput] = useState("");
-
-  console.log("qrData==", qrData)
-
+  
+  setUserData(qrData)
 
   const handleScan = (data) => {
     if (data && data.text) {
       // Parse the JSON string from the 'text' field
+      // console.log('data===', data)
       const parsedData = JSON.parse(data.text);
       setQrData(parsedData);
+      setUserData(parsedData);
     }
   };
 
@@ -30,27 +29,6 @@ const QRReader = () => {
 
   const toggleScanner = () => {
     setOpenQR((prevOpenQr) => !prevOpenQr);
-  };
-
-  const [data] = useState({
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "123-456-7890",
-  });
-
-  const handleInputChange = (e) => {
-    setInputData(e.target.value);
-
-  };
-
-
-  const convertStringToQRCode = () => {
-    setDataInput(JSON.parse(inputData));
-  };
-
-  const convertQRCodeToString = () => {
-    setInputData(JSON.stringify(data));
   };
 
 
@@ -74,39 +52,25 @@ const QRReader = () => {
 <p>
         {qrData !== "No result" ? (
           <>
-            <strong>ID:</strong> {qrData.id}
+            <strong>QR Code:</strong> {qrData.qrCode}
             <br />
-            <strong>Name:</strong> {qrData.name}
+            <strong>Name:</strong> {qrData.nama}
             <br />
-            <strong>Email:</strong> {qrData.email}
+            <strong>Saldo:</strong> {qrData.wallet}
             <br />
-            <strong>Phone:</strong> {qrData.phone}
+            <strong>Tolong Gunakan Data yg sudah teregistrasi</strong>
           </>
         ) : (
           qrData
         )}
       </p>
-
-      <div>
-        <h1>QR Code Generator</h1>
-        <QRCodeGenerator data={data} />
-      </div>
-
-
-      <div>
-        <h2>Convert QR Code to String</h2>
-        <button onClick={convertQRCodeToString}>Convert QR to String</button>
-        <textarea
-          value={inputData}
-          onChange={handleInputChange}
-          rows="4"
-          cols="50"
-        />
-        <h2>Convert String to QR Code</h2>
-        <button onClick={convertStringToQRCode}>Convert String to QR</button>
-      </div>
     </div>
   );
+};
+
+QRReader.propTypes = {
+  setUserData: PropTypes.func,
+  
 };
 
 export default QRReader;

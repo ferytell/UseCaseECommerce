@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { getDataBarang, deleteBarang, editBarang } from "../connection/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faPencil, faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import PropTypes from 'prop-types';
 
 
-const BarangList = ({ showActions = true, refetch }) => {
+const BarangList = ({ showActions = true, refetch, showBuy = false, setAddBarang }) => {
   const [barangData, setBarangData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,15 +22,6 @@ const BarangList = ({ showActions = true, refetch }) => {
     } finally {
       setLoading(false);
     }
-
-    // try {
-    //   const fetchingTest = await getJavaTest();
-    //   console.log("fetchingTest==", fetchingTest);
-    // } catch (err) {
-    //   setError(err);
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   const handleDelete = async (rfid) => {
@@ -78,6 +69,18 @@ const BarangList = ({ showActions = true, refetch }) => {
     }
   };
 
+  const handleAddToBucket = (barang) => {
+    // console.log('barang clicked', barang)
+    setAddBarang(barang)
+
+    setTimeout(() => {
+      setAddBarang(null);
+    }, 50);
+  
+    
+  };
+
+
   useEffect(() => {
     fetchDataBarang();
   }, []);
@@ -92,7 +95,7 @@ const BarangList = ({ showActions = true, refetch }) => {
 
   return (
     <div className="container">
-      <h3>Barang List</h3>
+      <h3>Daftar Barang</h3>
       <table className="customer-table">
         <thead>
           <tr>
@@ -100,6 +103,8 @@ const BarangList = ({ showActions = true, refetch }) => {
             <th>Nama Barang</th>
             <th>Harga Satuan</th>
             {showActions && <th>Action</th>}
+            {showBuy && <th>Tambahkan</th>}
+
           </tr>
         </thead>
         <tbody>
@@ -110,7 +115,7 @@ const BarangList = ({ showActions = true, refetch }) => {
               <td>{barang.hargaSatuan}</td>
               {showActions && (
               <td>
-                <div style={{ paddingInline: "20px" }}>
+                <div style={{ display: 'flex',paddingInline: "20px", justifyContent: 'center'  }}>
                   <FontAwesomeIcon
                     icon={faTrashAlt}
                     onClick={() => handleDelete(barang.rfid)}
@@ -125,6 +130,23 @@ const BarangList = ({ showActions = true, refetch }) => {
                     onClick={() => handleEdit(barang)}
                     style={{ cursor: "pointer", color: "green" }}
                   />
+                </div>
+              </td>
+              )}
+              {showBuy && (
+              <td>
+                <div style={{ display: 'flex', paddingInline: "20px", justifyContent: 'center' }}>
+                  <FontAwesomeIcon
+                    icon={faShoppingBasket}
+                    onClick={() => handleAddToBucket(barang)}
+                    
+                    style={{
+                      cursor: "pointer",
+                      color: "orange",
+                      paddingInlineEnd: "20px",
+                    }}
+                  />
+                 
                 </div>
               </td>
               )}
@@ -179,6 +201,8 @@ const BarangList = ({ showActions = true, refetch }) => {
 BarangList.propTypes = {
   refetch: PropTypes.bool,
   showActions: PropTypes.bool,
+  showBuy: PropTypes.bool,
+  setAddBarang: PropTypes.func,
 };
 
 

@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var historyRouter = require('./routes/history');
 var transactionRoutes = require('./routes/transactions');
+var multipleTransactionRoutes = require('./routes/multipleTransaction')
 const connectDB = require('./connection/mongoDb');
 const redisClient = require('./connection/redisClient');
 
@@ -26,5 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/history', historyRouter);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/multiple-transactions', multipleTransactionRoutes);
+
 
 module.exports = app;

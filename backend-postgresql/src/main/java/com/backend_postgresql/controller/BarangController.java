@@ -31,7 +31,7 @@ public class BarangController {
         return barangService.addBarang(barang);
     }
 
-     @PutMapping("/barang/{id}")
+    @PutMapping("/barang/{id}")
     public Barang updateBarang(@PathVariable String id, @RequestBody Barang barangDetails) {
         return barangService.updateBarang(id, barangDetails);
     }

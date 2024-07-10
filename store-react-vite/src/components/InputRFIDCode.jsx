@@ -55,7 +55,7 @@ const InputRFIDCode = () => {
           required
         />
         <input
-          type="text"
+          type="number"
           name="hargaSatuan"
           placeholder="Harga"
           value={newBarang.hargaSatuan}

@@ -1,14 +1,13 @@
 package com.backend_postgresql.service;
 
+import com.backend_postgresql.exception.ResourceNotFoundException;
 import com.backend_postgresql.model.Barang;
 import com.backend_postgresql.model.Customer;
 import com.backend_postgresql.model.Transaksi;
 import com.backend_postgresql.repository.BarangRepository;
 import com.backend_postgresql.repository.CustomerRepository;
 import com.backend_postgresql.repository.TransaksiRepository;
-
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +17,7 @@ import java.util.List;
 @Service
 public class TransaksiService {
 
-    // @Autowired
-    // private TransaksiRepository transaksiRepository;
-
-    // public Transaksi addTransaksi(Transaksi transaksi) {
-    //     return transaksiRepository.save(transaksi);
-    // }
-
-     @Autowired
+    @Autowired
     private CustomerRepository customerRepository;
 
     @Autowired
@@ -66,6 +58,4 @@ public class TransaksiService {
 
         return transaksiRepository.save(transaksi);
     }
-
-
 }

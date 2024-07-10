@@ -14,9 +14,16 @@ Content-Type: application/json
 
 {
     "qrCode": "123457",
-    "nama": "Imas Rokayah",
+    "nama": "James Bond",
     "wallet": 1000.0
 }
+
+### =============== DELETE Customer ===============
+
+delete http://localhost:5000/api/customers/93xjbcny7
+Content-Type: application/json
+
+
 
 ### =============== GET Barang ===============
 
@@ -64,20 +71,38 @@ post http://localhost:5000/api/transaksi
 Content-Type: application/json
 
 {
-    "qrCode": "123457",
+    "qrCode": "srrtr719x",
     "rfid": "CA00026",
     "jumlah": 1
 }
 
 
-### =============== GET Test History ===============
+### =============== Post Multiple Transactions ===============
 
-get http://localhost:4000/history/hello
+post http://localhost:4000/api/multiple-transactions
+Content-Type: application/json
 
+{
+  "transactions": [
+    {
+      "qrCode": "srrtr719x",
+      "rfid": "CA00026",
+      "jumlah": 2
+    },
+    {
+      "qrCode": "srrtr719x",
+      "rfid": "CA00027",
+      "jumlah": 1
+    },
+    {
+      "qrCode": "srrtr719x",
+      "rfid": "CA00021",
+      "jumlah": 3
+    }
+  ]
+}
 
+### =============== POST History - Testing ===============
 
-### =============== POST Transaksi ===============
-
-get http://localhost:4000/history/hello
-
+get http://localhost:4000/history
 

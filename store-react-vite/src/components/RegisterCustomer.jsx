@@ -1,25 +1,21 @@
-import  { useState } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import QRCodeGenerator from "./qr/QRCodeGenerator";
+import { addCustomer } from "../connection/api";
 
 const RegisterCustomer = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate('/main-menu');
- };
+    navigate("/main-menu");
+  };
 
-
-
-  const [customers, setCustomers] = useState([
-    { id: 1, name: 'John Doe', wallet: 98700 },
-    { id: 2, name: 'Jane Smith', wallet: 95504 },
-    // Add more customers as needed
-  ]);
+  const [customers, setCustomers] = useState([]);
 
   const [newCustomer, setNewCustomer] = useState({
-    id: '',
-    name: '',
-    wallet: 0
+    qrCode: "",
+    nama: "",
+    wallet: 0,
   });
 
   const handleInputChange = (e) => {
@@ -30,49 +26,84 @@ const RegisterCustomer = () => {
   const generateRandomID = () => {
     return Math.random().toString(36).substr(2, 9);
   };
-
-
-  const handleFormSubmit = (e) => {
+  const newCustomerWithID = { ...newCustomer, qrCode: generateRandomID() };
+  console.log("newCustomerWithID===", newCustomerWithID);
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const newCustomerWithID = { ...newCustomer, id: generateRandomID() };
+
     setCustomers([...customers, newCustomerWithID]);
-    setNewCustomer({ id: '', name: '', wallet: 0 });
+
+    try {
+      await addCustomer(newCustomerWithID);
+      // Refetch
+      // setRefetch((prev) => !prev);
+      // Reset Form
+      setNewCustomer({ qrCode: "", nama: "", wallet: 0 });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  // const handleFormSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     await addBarang(newBarang);
+  //     // Refetch
+  //     setRefetch((prev) => !prev);
+  //      // Reset Form
+  //     setNewBarang({ rfid: "", namaBarang: "", hargaSatuan: 0 });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   // setCustomers([...customers, newCustomer]);
+
+  // };
 
   return (
     <div className="container">
       <h1>Customer Register</h1>
-      
+
       <form onSubmit={handleFormSubmit}>
-       
         <input
           type="text"
-          name="name"
+          name="nama"
           placeholder="Name"
           value={newCustomer.name}
           onChange={handleInputChange}
           required
         />
         <input
-          type="wallet"
+          type="number"
           name="wallet"
           placeholder="Input ammount"
           value={newCustomer.wallet}
           onChange={handleInputChange}
           required
         />
-   
-        <button type="submit" className="button">Add Customer</button>
+
+        <button type="submit" className="button">
+          Add Customer
+        </button>
       </form>
 
-      <h2>Customer List</h2>
+      <h2>Customer</h2>
       <ul>
-        {customers.map(customer => (
-          <li key={customer.id}>{customer.name} (ID: {customer.id}) {customer.wallet}</li>
+        {customers.map((customer) => (
+          <li key={customer.id}>
+            {customer.nama} (ID: {customer.qrCode}) {customer.wallet}
+          </li>
         ))}
       </ul>
-      <button className="button" onClick={handleBack}>Main Menu</button>
+      {newCustomerWithID.nama !== "" && (
+        <div>
+          <h1>QR Code Generator</h1>
+          <QRCodeGenerator data={newCustomerWithID} />
+        </div>
+      )}
+      <button className="button" onClick={handleBack}>
+        Main Menu
+      </button>
     </div>
   );
 };
