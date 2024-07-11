@@ -117,7 +117,7 @@ export const deleteCustomer = async (qrCode) => {
 // Java API Create Transaction
 export const createTransaction = async (transaksi) => {
   try {
-    const response = await axios.delete("/api/transaksi", transaksi, {
+    const response = await axios.post("/api/transaksi", transaksi, {
       headers: { "Content-Type": "application/json" },
     });
     return response.data;
@@ -127,10 +127,10 @@ export const createTransaction = async (transaksi) => {
   }
 };
 
-// Express.js API
+// Express.js API Testing Jee
 export const getExpressData = async () => {
   try {
-    const response = await axios.put("/api/express/data-endpoint");
+    const response = await axios.get("/apis/history");
     return response.data;
   } catch (error) {
     console.error("Error fetching data from Express backend:", error);

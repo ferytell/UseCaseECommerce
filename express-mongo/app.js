@@ -24,10 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/history', historyRouter);
-app.use('/api/transactions', transactionRoutes);
-app.use('/api/multiple-transactions', multipleTransactionRoutes);
+app.use('/apis', indexRouter);
+app.use('/apis/history', historyRouter);
+app.use('/apis/transactions', transactionRoutes);
+app.use('/apis/multiple-transactions', multipleTransactionRoutes);
 
 
 module.exports = app;

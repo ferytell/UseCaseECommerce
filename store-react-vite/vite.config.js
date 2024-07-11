@@ -7,16 +7,17 @@ export default defineConfig({
   server: {
     port: 3000, // Change this to our Front end port
     proxy: {
+      "/apis": {
+        target: "http://localhost:4000",
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/apis/, ""),
+      },
       "/api": {
         target: "http://localhost:5000",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, "")
       },
-      "/api/express": {
-        target: "http://localhost:4000",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/express/, ""),
-      },
+      
     },
   },
 });
