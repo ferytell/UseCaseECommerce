@@ -114,13 +114,37 @@ export const deleteCustomer = async (qrCode) => {
   }
 };
 
+// Java API get Customer History Transaction
+export const getDataHistory = async (qrCode) => {
+  try {
+    const response = await axios.get(`/api/transaksi/byQrCode?qrCode=${qrCode}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching customer data:", error);
+    throw error;
+  }
+};
+
 // Java API Create Transaction
 export const createTransaction = async (transaksi) => {
   try {
-    const response = await axios.post("/api/transaksi", transaksi, {
+    const response = await axios.post("/apis/multiple-transactions", transaksi, {
       headers: { "Content-Type": "application/json" },
     });
-    return response.data;
+    return response;
+  } catch (error) {
+    console.error("Error fetching barang data:", error);
+    throw error;
+  }
+};
+
+// Express API GET Transaction History
+export const getAllTransaction = async (transaksi) => {
+  try {
+    const response = await axios.get("/apis/multiple-transactions", transaksi, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
   } catch (error) {
     console.error("Error fetching barang data:", error);
     throw error;

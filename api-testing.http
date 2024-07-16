@@ -60,9 +60,15 @@ delete http://localhost:5000/api/barang/CA00027
 Content-Type: application/json
 
 
-### =============== GET Transaksi ===============
+### =============== GET ALL Transaksi ===============
 
 get http://localhost:5000/api/transaksi
+
+
+### =============== GET Transaksi ===============
+
+get http://localhost:5000/api/transaksi/byQrCode?qrCode=srrtr719x
+
 
 
 ### =============== POST Transaksi ===============
@@ -79,28 +85,31 @@ Content-Type: application/json
 
 ### =============== Post Multiple Transactions ===============
 
-post http://localhost:4000/api/multiple-transactions
+post http://localhost:4000/apis/multiple-transactions
 Content-Type: application/json
 
 {
-  "transactions": [
-    {
-      "qrCode": "srrtr719x",
-      "rfid": "CA00026",
-      "jumlah": 2
-    },
-    {
-      "qrCode": "srrtr719x",
-      "rfid": "CA00027",
-      "jumlah": 1
-    },
-    {
-      "qrCode": "srrtr719x",
-      "rfid": "CA00021",
-      "jumlah": 3
-    }
-  ]
+    "transactions": [
+        [
+            {
+                "qrCode": "udldphqyh",
+                "rfid": "CA00027",
+                "jumlah": 1
+            },
+            {
+                "qrCode": "udldphqyh",
+                "rfid": "CA00021",
+                "jumlah": 1
+            }
+        ]
+    ]
 }
+
+### =============== Get Multiple Transactions ===============
+
+get http://localhost:4000/apis/multiple-transactions
+Content-Type: application/json
+
 
 ### =============== POST History - Testing ===============
 

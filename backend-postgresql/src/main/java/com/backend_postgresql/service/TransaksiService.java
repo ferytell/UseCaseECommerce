@@ -30,6 +30,11 @@ public class TransaksiService {
         return transaksiRepository.findAll();
     }
 
+    public List<Transaksi> getTransaksisByQrCode(String qrCode) {
+        return transaksiRepository.findByQrCode(qrCode);
+    }
+
+
     @Transactional
     public Transaksi createTransaction(String qrCode, String rfid, int jumlah) {
         // Find the customer and the item

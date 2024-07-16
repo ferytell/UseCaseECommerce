@@ -1,32 +1,45 @@
 import PropTypes from "prop-types";
-import { getExpressData } from "../connection/api";
-import { useEffect } from "react";
+import { createTransaction } from "../connection/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+// import { useEffect } from "react";
 
-const CustomerBarangTransaksi = ({ daftarBarang, QrCode }) => {
+const CustomerBarangTransaksi = ({
+  daftarBarang = [],
+  setDaftarBarang,
+  QrCode,
+  fetchCustomerData,
+}) => {
   const transactions = daftarBarang.map((item) => ({
     qrCode: QrCode,
     rfid: item.rfid,
     jumlah: item.amount,
   }));
 
-  console.log("=====", transactions);
-
-  const fetchCustomerData = async () => {
+  const doTransactions = async () => {
     try {
-      const data = await getExpressData();
-      console.log(data);
+      const payload = { transactions: transactions };
+      const transaction = await createTransaction(payload);
+      if (transaction.status === 201) {
+        setDaftarBarang([]);
+        fetchCustomerData();
+      }
     } catch (err) {
       console.error("error when fetchCustomerData");
     }
   };
 
-  const handleClick = () =>{
-    fetchCustomerData();
-    console.log('test')
-  }
-  useEffect(() => {
-    fetchCustomerData();
-  }, []);
+  const handleClick = () => {
+    doTransactions();
+    console.log("test");
+  };
+
+  const handleDelete = (rfid) => {
+    const updatedDaftarBarang = daftarBarang.filter(
+      (barang) => barang.rfid !== rfid
+    );
+    setDaftarBarang(updatedDaftarBarang);
+  };
 
   return (
     <div>
@@ -38,6 +51,7 @@ const CustomerBarangTransaksi = ({ daftarBarang, QrCode }) => {
               <th>Nama Barang</th>
               <th>Harga Satuan</th>
               <th>Jumlah</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -46,17 +60,38 @@ const CustomerBarangTransaksi = ({ daftarBarang, QrCode }) => {
                 <td>{barang.namaBarang}</td>
                 <td>{barang.hargaSatuan}</td>
                 <td>{barang.amount}</td>
+                <td>
+                  <div
+                    style={{
+                      display: "flex",
+                      paddingInline: "20px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      onClick={() => handleDelete(barang.rfid)}
+                      style={{
+                        cursor: "pointer",
+                        color: "red",
+                        paddingInlineEnd: "20px",
+                      }}
+                    />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div>
-          --
           <br />
-          --
         </div>
 
-        <button className="button" onClick={ handleClick}>
+        <button
+          className={"button"}
+          disabled={daftarBarang.length < 1}
+          onClick={handleClick}
+        >
           Check Out
         </button>
       </div>
@@ -73,7 +108,9 @@ CustomerBarangTransaksi.propTypes = {
       amount: PropTypes.number.isRequired,
     })
   ),
+  setDaftarBarang: PropTypes.func,
   QrCode: PropTypes.string,
+  fetchCustomerData: PropTypes.func,
 };
 
 export default CustomerBarangTransaksi;

@@ -4,10 +4,13 @@ import QRReader from "./qr/QRReader";
 import BarangList from "./BarangList";
 import CustomerBarangTransaksi from "./CustomerBarangTransaksi";
 import { getDataCustomer } from "../connection/api";
+import TransaksiMongoDB from "./TransaksiMongoDB";
 
 const SimpanTransaksi = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({ qrCode: "", nama: "", wallet: 0 });
+  const [updatedWallet, setUpdatedWallet] = useState(null);
+  const [showHistory, setShowHistory] = useState(false);
   const [addBarang, setAddBarang] = useState({
     hargaSatuan: 0,
     namaBarang: "",
@@ -16,9 +19,12 @@ const SimpanTransaksi = () => {
   const [daftarBarang, setDaftarBarang] = useState([]);
   const [customers, setCustomers] = useState([]);
 
-  
   const handleBack = () => {
     navigate("/main-menu");
+  };
+
+  const handleHistory = () => {
+    setShowHistory((prevShowHistory) => !prevShowHistory);
   };
 
   const fetchCustomerData = async () => {
@@ -30,17 +36,23 @@ const SimpanTransaksi = () => {
     }
   };
 
-
   const isUserExist = (qrCode) => {
     const customer = customers.find((cust) => cust.qrCode === qrCode);
     if (customer) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   };
 
-
+  useEffect(() => {
+    if (userData.qrCode !== "") {
+      const customer = customers.find(
+        (cust) => cust.qrCode === userData.qrCode
+      );
+      setUpdatedWallet(customer?.wallet);
+    }
+  }, [customers, userData]);
 
   useEffect(() => {
     if (addBarang && addBarang.rfid && addBarang !== null) {
@@ -68,7 +80,6 @@ const SimpanTransaksi = () => {
     }
   }, [addBarang]);
 
-
   useEffect(() => {
     fetchCustomerData();
   }, []);
@@ -86,12 +97,10 @@ const SimpanTransaksi = () => {
         </div>
       )}
 
-      
-
       {isUserExist(userData.qrCode) && (
         <div className="container">
           <div>User active: {userData.nama}</div>
-          <div>Saldo: {userData.wallet}</div>
+          <div>Saldo: {updatedWallet}</div>
         </div>
       )}
       {isUserExist(userData.qrCode) && (
@@ -107,13 +116,21 @@ const SimpanTransaksi = () => {
       {isUserExist(userData.qrCode) && (
         <CustomerBarangTransaksi
           daftarBarang={daftarBarang}
+          setDaftarBarang={setDaftarBarang}
           QrCode={userData.qrCode}
+          fetchCustomerData={fetchCustomerData}
         />
       )}
-      <div style={{ height: "50px" }}>-----</div>
-      <button className="button" onClick={handleBack}>
-        Main Menu
-      </button>
+      {isUserExist(userData.qrCode) && (
+        <button className="button" onClick={handleHistory}>
+          Show History
+        </button>
+      )}
+      
+      {/* {!showHistory && <div style={{ height: "100px" }}></div>} */}
+
+      {showHistory && <TransaksiMongoDB qrCode={userData.qrCode} />}
+      <div style={{ height: "100px" }}></div>
     </div>
   );
 };

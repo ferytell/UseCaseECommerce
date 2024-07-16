@@ -38,4 +38,9 @@ public class TransaksiController {
             transaksiRequest.getJumlah()
         );
     }
+
+    @GetMapping("/transaksi/byQrCode")
+    public List<Transaksi> getTransaksisByQrCode(@RequestParam String qrCode) {
+        return transaksiService.getTransaksisByQrCode(qrCode);
+    }
 }
