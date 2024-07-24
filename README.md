@@ -16,6 +16,9 @@ For this project I using:
 
 - for now it just testing, lol
 
+## 
+
+![me](https://github.com/ferytell/UseCaseECommerce/blob/dev/store-react-vite/public/2024-07-2413-25-25-ezgif.com-video-to-gif-converter.gif)
 
 
 ## Tech
